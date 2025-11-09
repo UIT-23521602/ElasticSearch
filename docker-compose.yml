@@ -1,0 +1,111 @@
+services:
+  es-node-01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.4
+    container_name: ES-Node-01
+    environment:
+      - node.name=ES-Node-01
+      - cluster.name=QTM17_Elasticsearch_Cluster
+      - discovery.seed_hosts=es-node-02,es-node-03
+      - cluster.initial_master_nodes=ES-Node-01,ES-Node-02,ES-Node-03
+      
+      # --- ĐÃ SỬA: BẬT BẢO MẬT VÀ SSL/TLS ---
+      - xpack.security.enabled=true
+      - xpack.security.enrollment.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.keystore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - xpack.security.http.ssl.truststore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.keystore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - xpack.security.transport.ssl.truststore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - "xpack.security.transport.ssl.verification_mode=certificate"
+      # ----------------------------------------
+
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+      # --- ĐÃ THÊM: Gắn file cert vào container ---
+      - ./elastic-certificates.p12:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    networks:
+      - elastic
+    mem_limit: 1536m
+    cpus: "0.5"
+
+  es-node-02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.4
+    container_name: ES-Node-02
+    environment:
+      - node.name=ES-Node-02
+      - cluster.name=QTM17_Elasticsearch_Cluster
+      - discovery.seed_hosts=es-node-01,es-node-03
+      - cluster.initial_master_nodes=ES-Node-01,ES-Node-02,ES-Node-03
+
+      # --- ĐÃ SỬA: BẬT BẢO MẬT VÀ SSL/TLS ---
+      - xpack.security.enabled=true
+      - xpack.security.enrollment.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.keystore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - xpack.security.http.ssl.truststore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.keystore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - xpack.security.transport.ssl.truststore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - "xpack.security.transport.ssl.verification_mode=certificate"
+      # ----------------------------------------
+      
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9201:9200"
+    volumes:
+      - esdata02:/usr/share/elasticsearch/data
+      # --- ĐÃ THÊM: Gắn file cert vào container ---
+      - ./elastic-certificates.p12:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    networks:
+      - elastic
+    mem_limit: 1536m
+    cpus: "0.5"
+
+  es-node-03:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.4
+    container_name: ES-Node-03
+    environment:
+      - node.name=ES-Node-03
+      - cluster.name=QTM17_Elasticsearch_Cluster
+      - discovery.seed_hosts=es-node-01,es-node-02
+      - cluster.initial_master_nodes=ES-Node-01,ES-Node-02,ES-Node-03
+
+      # --- ĐÃ SỬA: BẬT BẢO MẬT VÀ SSL/TLS ---
+      - xpack.security.enabled=true
+      - xpack.security.enrollment.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.keystore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - xpack.security.http.ssl.truststore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.keystore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - xpack.security.transport.ssl.truststore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+      - "xpack.security.transport.ssl.verification_mode=certificate"
+      # ----------------------------------------
+      
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9202:9200"
+    volumes:
+      - esdata03:/usr/share/elasticsearch/data
+      # --- ĐÃ THÊM: Gắn file cert vào container ---
+      - ./elastic-certificates.p12:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    networks:
+      - elastic
+    mem_limit: 1536m
+    cpus: "0.5"
+
+volumes:
+  esdata01:
+    driver: local
+  esdata02:
+    driver: local
+  esdata03:
+    driver: local
+
+networks:
+  elastic:
+    driver: bridge

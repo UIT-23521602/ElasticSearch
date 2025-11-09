@@ -1,0 +1,5 @@
+# Bỏ qua các file chứng chỉ (đuôi .p12)
+*.p12
+
+# Bỏ qua file mật khẩu
+password.txt

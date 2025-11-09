@@ -1,0 +1,10 @@
+{ "index": { "_id": "1" } }
+{ "product_name": "Elasticsearch for Beginners", "category": "books", "price": 29.99, "stock_quantity": 150, "last_updated": "2025-11-09" }
+{ "index": { "_id": "2" } }
+{ "product_name": "Logstash Admin Guide", "category": "books", "price": 34.50, "stock_quantity": 80, "last_updated": "2025-11-08" }
+{ "index": { "_id": "3" } }
+{ "product_name": "Kibana Visualizations", "category": "books", "price": 25.00, "stock_quantity": 200, "last_updated": "2025-11-09" }
+{ "index": { "_id": "4" } }
+{ "product_name": "High Performance Laptop", "category": "electronics", "price": 1200.00, "stock_quantity": 30, "last_updated": "2025-11-07" }
+{ "index": { "_id": "5" } }
+{ "product_name": "Wireless Mouse", "category": "electronics", "price": 45.99, "stock_quantity": 500, "last_updated": "2025-11-09" }
