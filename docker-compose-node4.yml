@@ -1,12 +1,13 @@
 services:
-  es-node-01:
+  es-node-04:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.4
-    container_name: ES-Node-01
+    container_name: ES-Node-04
     environment:
-      - node.name=ES-Node-01
-      - cluster.name=QTM17_Elasticsearch_Cluster
-      - discovery.seed_hosts=192.168.2.1,192.168.2.2
-      - cluster.initial_master_nodes=ES-Node-01,ES-Node-02,ES-Node-03
+      - node.name=ES-Node-04
+      - cluster.name=QTM17_Elasticsearch_Cluster    
+      - discovery.seed_hosts=192.168.2.1,192.168.2.2,192.168.2.28
+     
+      #- cluster.initial_master_nodes=ES-Node-01,ES-Node-02,ES-Node-03
       - network.publish_host=192.168.2.28
       # ----------------------------------------
       - xpack.security.enabled=true
@@ -19,23 +20,23 @@ services:
       - xpack.security.transport.ssl.truststore.path=/usr/share/elasticsearch/config/certs/elastic-certificates.p12
       - "xpack.security.transport.ssl.verification_mode=certificate"
       # ----------------------------------------
-
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - transport.publish_port=9304    
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" 
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - "9204:9200" 
+      - "9304:9300" 
     volumes:
-      - esdata01:/usr/share/elasticsearch/data
+      - esdata04:/usr/share/elasticsearch/data
       - ./elastic-certificates.p12:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
     networks:
       - elastic
-    mem_limit: 2g
+    mem_limit: 1g
     cpus: "0.5"
 
 volumes:
-  esdata01:
+  esdata04:
     driver: local
-    
+
 networks:
   elastic:
     driver: bridge

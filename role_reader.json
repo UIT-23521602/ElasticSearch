@@ -1,7 +1,7 @@
 {
  "indices": [
   {
-   "names": [ "qtm17_products" ],
+   "names": [ "*" ],
    "privileges": [ "read" ]
   }
  ]
