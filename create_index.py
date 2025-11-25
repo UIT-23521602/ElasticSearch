@@ -7,11 +7,10 @@ import getpass
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # --- CẤU HÌNH MẶC ĐỊNH ---
-# Gán cứng IP Kali ở đây
 DEFAULT_URL = "https://192.168.2.28:9200"
 DEFAULT_USER = "elastic"
 
-# Cấu hình chung cho tất cả index (Yêu cầu đề tài)
+# Cấu hình chung cho tất cả index
 SETTINGS = {
     "number_of_shards": 3,
     "number_of_replicas": 1
@@ -59,14 +58,13 @@ INDICES_CONFIG = {
 def get_credentials():
     print("\n--- CẤU HÌNH KẾT NỐI ---")
     
-    # Sử dụng luôn mặc định, không hỏi nữa
     url = DEFAULT_URL
     user = DEFAULT_USER
     
     print(f"🔹 Mục tiêu: {url}")
     print(f"🔹 Tài khoản: {user}")
 
-    # Chỉ hỏi mật khẩu
+    # Hỏi mật khẩu
     password = getpass.getpass(f"🔑 Nhập Mật khẩu: ")
     return url, user, password
 
@@ -79,7 +77,7 @@ def main():
     for index_name, config in INDICES_CONFIG.items():
         url = f"{BASE_URL}/{index_name}"
         
-        # 1. Xóa nếu đã tồn tại (để làm mới)
+        # 1. Xóa nếu đã tồn tại
         try:
             requests.delete(url, auth=AUTH, verify=False)
             print(f"🗑️  Đã xóa index cũ: {index_name}")

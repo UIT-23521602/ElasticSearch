@@ -9,7 +9,6 @@ import getpass
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # --- CẤU HÌNH MẶC ĐỊNH ---
-# Gán cứng IP Kali ở đây
 DEFAULT_URL = "https://192.168.2.28:9200"
 DEFAULT_USER = "elastic"
 
@@ -17,7 +16,7 @@ DEFAULT_USER = "elastic"
 RECORDS_PER_INDEX = 1000000 # 1 Triệu dòng mỗi index
 BATCH_SIZE = 5000
 
-# Dữ liệu mẫu để random (Giữ nguyên)
+# Dữ liệu mẫu để random
 DATA_POOLS = {
     "devices": {
         "brands": ["Apple", "Samsung", "Sony", "LG", "Dell", "HP", "Panasonic"],
@@ -36,7 +35,7 @@ DATA_POOLS = {
     }
 }
 
-# Danh sách index cần nạp (Phải khớp tên với file create_indices.py)
+# Danh sách index cần nạp 
 TARGET_INDICES = ["qtm17_devices", "qtm17_music", "qtm17_vehicles"]
 
 def get_credentials():
@@ -54,7 +53,7 @@ def get_credentials():
     return url, user, password
 
 def generate_doc(index_name, doc_id):
-    # Logic chọn dữ liệu (Giữ nguyên)
+    # Logic chọn dữ liệu
     if "devices" in index_name:
         d = DATA_POOLS["devices"]
         return {

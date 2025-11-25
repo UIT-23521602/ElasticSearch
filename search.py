@@ -266,7 +266,7 @@ if __name__ == "__main__":
         print("\n====== MENU TÌM KIẾM ======")
         print("1. Match Query")
         print("2. Term Query")
-        print("3. Boolean Query (Tùy chỉnh)")
+        print("3. Boolean Query")
         print("4. Aggregation")
         print("5. Fuzzy & Highlight")
         print("0. Thoát (hoặc đổi Cấu hình)")
