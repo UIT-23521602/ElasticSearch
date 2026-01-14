@@ -257,6 +257,26 @@ def mode_fuzzy(url, user, password):
         }
     }
     execute_request(url, user, password, query, "Fuzzy & Highlight", extra_fields=[field])
+    
+def mode_similarity(url, user, password):
+    print("\n--- 6. SIMILARITY SEARCH (More Like This) ---")
+    
+    field = input("Nhập tên trường (Enter dùng 'device_name'): ").strip() or "device_name"
+    text = input("Nhập tên thiết bị mẫu (VD: SAMSUNG LAPTOP PRO 6): ").strip()
+    
+    query = {
+        "track_total_hits": True,
+        "query": {
+            "more_like_this": {
+                "fields": [field],
+                "like": text,
+                "min_term_freq": 1,
+                "min_doc_freq": 1
+            }
+        }
+    }
+    
+    execute_request(url, user, password, query, "Similarity (MLT)", extra_fields=[field])  
 
 # --- MAIN ---
 if __name__ == "__main__":
@@ -269,15 +289,17 @@ if __name__ == "__main__":
         print("3. Boolean Query")
         print("4. Aggregation")
         print("5. Fuzzy & Highlight")
+        print("6. Similarity Query (More Like This)")
         print("0. Thoát (hoặc đổi Cấu hình)")
         
-        choice = input("👉 Chọn chức năng (0-5): ").strip()
+        choice = input("👉 Chọn chức năng (0-6): ").strip()
         
         if choice == '1': mode_match(t_url, t_user, t_pass)
         elif choice == '2': mode_term(t_url, t_user, t_pass)
         elif choice == '3': mode_bool(t_url, t_user, t_pass)
         elif choice == '4': mode_aggs(t_url, t_user, t_pass)
         elif choice == '5': mode_fuzzy(t_url, t_user, t_pass)
+        elif choice == '6': mode_similarity(t_url, t_user, t_pass)
         elif choice == '0':
             reconfig = input("Bạn muốn thoát hẳn (y) hay đổi Cấu hình (n)? (y/n): ").lower()
             if reconfig == 'n':
